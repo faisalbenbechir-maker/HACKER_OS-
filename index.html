@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HACKER OS | Cyber Academy</title>
+<style>
+:root{--green:#00ff88;--bg:#050907;--panel:#0a1510;--border:#123d28;--muted:#789889}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#d9f9e7;font-family:Consolas,monospace;min-height:100vh}
+#matrix{position:fixed;inset:0;width:100%;height:100%;opacity:.12;z-index:-1}
+header{height:65px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 25px;background:#050907ed;position:sticky;top:0;z-index:5}
+.logo{font-size:21px;color:var(--green);font-weight:bold;letter-spacing:2px}
+.logo span{color:white}
+.status{color:var(--green);font-size:12px}
+.layout{display:flex;min-height:calc(100vh - 65px)}
+aside{width:225px;padding:20px 12px;border-right:1px solid var(--border);background:#07100beF;flex-shrink:0}
+.nav-title{color:#547765;font-size:11px;margin:18px 10px 8px}
+.nav{display:block;width:100%;text-align:left;background:transparent;color:#9ab9a7;border:0;padding:13px 12px;cursor:pointer;font:inherit;border-radius:5px;margin:3px 0}
+.nav:hover,.nav.active{background:#103521;color:var(--green);border-left:3px solid var(--green)}
+main{padding:28px;width:100%;max-width:1450px;margin:auto}
+.page{display:none}.page.active{display:block}
+h1{font-size:29px;color:var(--green);margin:0 0 10px}
+h2{font-size:19px;color:var(--green)}
+.subtitle{color:var(--muted);margin-bottom:25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:15px}
+.card{background:linear-gradient(145deg,#0c1c13,#07100b);border:1px solid var(--border);padding:20px;border-radius:9px;min-height:125px}
+.card:hover{border-color:var(--green);transform:translateY(-2px);transition:.2s}
+.card h3{color:var(--green);margin:8px 0}
+.big{font-size:27px;margin-bottom:8px}
+.muted{color:var(--muted);font-size:13px;line-height:1.6}
+button,.btn{background:#0d3821;border:1px solid var(--green);color:var(--green);padding:10px 15px;border-radius:5px;cursor:pointer;font:inherit}
+button:hover{background:var(--green);color:#001b0d}
+input{background:#020805;border:1px solid var(--border);padding:12px;color:var(--green);width:100%;font:inherit;border-radius:5px;margin:10px 0}
+.terminal{background:#020604;border:1px solid #14532d;border-radius:8px;padding:17px;min-height:290px}
+#output{height:220px;overflow:auto;color:#a7ffc7;white-space:pre-wrap;font-size:13px;line-height:1.7}
+.prompt{display:flex;gap:8px;align-items:center}
+.prompt span{color:var(--green)}
+.prompt input{margin:0;border:0;outline:0}
+.lesson{border-bottom:1px solid var(--border);padding:15px 0}
+.lesson h3{color:var(--green)}
+.tag{color:#06150b;background:var(--green);padding:3px 7px;border-radius:3px;font-size:11px}
+.progress{height:8px;background:#14251b;border-radius:10px;overflow:hidden;margin:10px 0}
+.progress div{height:100%;background:var(--green);width:0}
+footer{text-align:center;padding:25px;color:#547765;font-size:12px}
+@media(max-width:700px){.layout{display:block}aside{width:100%;display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--border);padding:8px}.nav{white-space:nowrap;width:auto;font-size:12px;padding:10px}main{padding:17px}header{padding:0 13px}.status{font-size:10px}}
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+<header>
+<div class="logo">HACKER<span> OS</span></div>
+<div class="status">● SYSTEM ONLINE | EDUCATION MODE</div>
+</header>
+<div class="layout">
+<aside>
+<div>
+<div class="nav-title">MAIN MENU</div>
+<button class="nav active" onclick="show('dashboard',this)">⌂ Dashboard</button>
+<button class="nav" onclick="show('terminal',this)">⌘ Terminal</button>
+<button class="nav" onclick="show('network',this)">◎ Network Lab</button>
+<button class="nav" onclick="show('password',this)">▣ Password Lab</button>
+<button class="nav" onclick="show('security',this)">⬡ Security Center</button>
+<div class="nav-title">LEARNING</div>
+<button class="nav" onclick="show('learn',this)">▤ Cyber Lessons</button>
+<button class="nav" onclick="show('missions',this)">⚑ Missions</button>
+<button class="nav" onclick="show('about',this)">ⓘ About</button>
+</div>
+</aside>
+<main>
+
+<section id="dashboard" class="page active">
+<h1>Welcome to HACKER OS</h1>
+<p class="subtitle">Your journey into the world of cybersecurity starts here.</p>
+<div class="grid">
+<div class="card"><div class="big">⌘</div><h3>Terminal</h3><p class="muted">Learn basic commands in a simulated terminal.</p><button onclick="show('terminal')">Open Terminal →</button></div>
+<div class="card"><div class="big">◎</div><h3>Network Lab</h3><p class="muted">Understand IP addresses, DNS and networks.</p><button onclick="show('network')">Explore →</button></div>
+<div class="card"><div class="big">▣</div><h3>Password Lab</h3><p class="muted">Learn how password security works.</p><button onclick="show('password')">Explore →</button></div>
+<div class="card"><div class="big">⬡</div><h3>Security Center</h3><p class="muted">Discover digital security and protection.</p><button onclick="show('security')">Explore →</button></div>
+</div>
+<br>
+<div class="card">
+<h2>YOUR LEARNING PROGRESS</h2>
+<p class="muted">Complete missions to improve your cybersecurity knowledge.</p>
+<div class="progress"><div id="progress"></div></div>
+<span id="progressText" class="muted">0 / 5 missions completed</span>
+</div>
+</section>
+
+<section id="terminal" class="page">
+<h1>Terminal</h1><p class="subtitle">A simulated educational command line. Type help to begin.</p>
+<div class="terminal">
+<div id="output">HACKER OS [Version 1.0]
+Educational simulation environment.
+Type 'help' to see available commands.
+
+</div>
+<div class="prompt"><span>guest@hackeros:~$</span><input id="command" placeholder="Enter command..." autocomplete="off" onkeydown="if(event.key==='Enter')runCommand()"></div>
+</div>
+<p class="muted">All commands run inside this educational simulation. They do not access external devices.</p>
+</section>
+
+<section id="network" class="page">
+<h1>Network Lab</h1><p class="subtitle">Learn the basic building blocks of computer networks.</p>
+<div class="grid">
+<div class="card"><h3>IP Address</h3><p class="muted">An IP address is a numerical identifier assigned to a device on a network.</p><p>Example: <span class="tag">192.168.1.10</span></p></div>
+<div class="card"><h3>DNS</h3><p class="muted">DNS translates domain names into IP addresses so devices can find online services.</p><p>Example: <span class="tag">example.com</span></p></div>
+<div class="card"><h3>Gateway</h3><p class="muted">A default gateway connects your local network to other networks.</p><p>Example: <span class="tag">192.168.1.1</span></p></div>
+<div class="card"><h3>Router</h3><p class="muted">A router forwards data between networks and helps devices connect to the internet.</p></div>
+</div>
+<div class="card" style="margin-top:15px">
+<h2>Network Knowledge Check</h2>
+<p>What does DNS do?</p>
+<button onclick="answer(this,false)">Encrypts your screen</button>
+<button onclick="answer(this,true)">Translates domain names into IP addresses</button>
+<button onclick="answer(this,false)">Charges your battery</button>
+<p id="networkResult" class="muted"></p>
+</div>
+</section>
+
+<section id="password" class="page">
+<h1>Password Lab</h1><p class="subtitle">Understand password strength using an example. Do not enter a real password.</p>
+<div class="card">
+<h2>Educational Password Checker</h2>
+<input id="pass" type="text" placeholder="Type a sample password..." oninput="checkPassword()">
+<h3 id="strength">Waiting for input...</h3>
+<div class="progress"><div id="passbar"></div></div>
+<p id="passinfo" class="muted">A good password should be long and difficult to guess.</p>
+</div>
+<div class="grid" style="margin-top:15px">
+<div class="card"><h3>Length</h3><p class="muted">Longer passwords generally provide more possible combinations.</p></div>
+<div class="card"><h3>Uniqueness</h3><p class="muted">Avoid reusing the same password across different accounts.</p></div>
+<div class="card"><h3>Password Manager</h3><p class="muted">A password manager can help create and store unique passwords securely.</p></div>
+</div>
+</section>
+
+<section id="security" class="page">
+<h1>Security Center</h1><p class="subtitle">Learn the concepts used to protect computers and information.</p>
+<div class="grid">
+<div class="card"><h3>Firewall</h3><p class="muted">A firewall filters network traffic according to security rules.</p><span class="tag">DEFENSE</span></div>
+<div class="card"><h3>Antivirus</h3><p class="muted">Security software helps detect and respond to malicious programs.</p><span class="tag">PROTECTION</span></div>
+<div class="card"><h3>Phishing</h3><p class="muted">Phishing uses deceptive messages to trick people into revealing information.</p><span class="tag">THREAT AWARENESS</span></div>
+<div class="card"><h3>Encryption</h3><p class="muted">Encryption transforms readable information into protected data.</p><span class="tag">PRIVACY</span></div>
+<div class="card"><h3>Updates</h3><p class="muted">Software updates often fix security weaknesses and bugs.</p><span class="tag">MAINTENANCE</span></div>
+<div class="card"><h3>Backups</h3><p class="muted">Backups help recover important information if something goes wrong.</p><span class="tag">RECOVERY</span></div>
+</div>
+</section>
+
+<section id="learn" class="page">
+<h1>Cyber Lessons</h1><p class="subtitle">Start with the fundamentals. Learn one concept at a time.</p>
+<div class="card">
+<div class="lesson"><h3>01 — What is Cybersecurity?</h3><p class="muted">Cybersecurity is the practice of protecting computers, networks, applications and data from digital threats.</p></div>
+<div class="lesson"><h3>02 — What is an IP Address?</h3><p class="muted">An IP address identifies a device or network interface so data can be delivered to the correct destination.</p></div>
+<div class="lesson"><h3>03 — What is a Port?</h3><p class="muted">A port is a logical communication endpoint used by network services. For example, HTTPS commonly uses port 443.</p></div>
+<div class="lesson"><h3>04 — What is Ethical Hacking?</h3><p class="muted">Ethical hacking means testing systems with permission to discover weaknesses and help fix them.</p></div>
+<div class="lesson"><h3>05 — What is Malware?</h3><p class="muted">Malware is software designed to harm devices, disrupt operations or access information without permission.</p></div>
+</div>
+</section>
+
+<section id="missions" class="page">
+<h1>Training Missions</h1><p class="subtitle">Complete the five beginner missions to earn your learning progress.</p>
+<div class="grid" id="missionGrid"></div>
+</section>
+
+<section id="about" class="page">
+<h1>About HACKER OS</h1>
+<div class="card">
+<h2>Learn. Explore. Protect.</h2>
+<p class="muted">HACKER OS is a cybersecurity education project for beginners. It introduces networking, digital safety, password security and ethical cybersecurity concepts through interactive learning tools.</p>
+<p class="muted">This website is an educational simulation. It does not scan networks, access other devices, retrieve credentials or perform real-world attacks.</p>
+<p><span class="tag">VERSION 1.0</span> <span class="tag">EDUCATIONAL EDITION</span></p>
+</div>
+</section>
+
+<footer>HACKER OS © 2026 | CYBERSECURITY EDUCATION PROJECT</footer>
+</main>
+</div>
+
+<script>
+const pages=document.querySelectorAll('.page');
+function show(id,btn){
+ pages.forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+ else document.querySelectorAll('.nav').forEach(n=>{if(n.getAttribute('onclick')?.includes("'"+id+"'"))n.classList.add('active')});
+}
+const output=document.getElementById('output');
+function printLine(t){output.textContent+=t+'\n';output.scrollTop=output.scrollHeight}
+function runCommand(){
+ const input=document.getElementById('command'),c=input.value.trim().toLowerCase();if(!c)return;
+ printLine('guest@hackeros:~$ '+c);input.value='';
+ const commands={
+ help:'Available commands:\nhelp      - Show commands\nwhoami    - Show current user\nabout     - About HACKER OS\nclear     - Clear terminal\ndate      - Show current date\nip        - Learn about IP addresses\ndns       - Learn about DNS\nports     - Learn about network ports\nmissions  - Show training missions\nstatus    - Show simulation status',
+ whoami:'Current user: guest\nEnvironment: HACKER OS educational simulation',
+ about:'HACKER OS — Cybersecurity Education Edition.\nLearn cybersecurity safely.',
+ date:new Date().toString(),
+ ip:'IP ADDRESS LESSON:\nAn IP address identifies a device on a network.\nExample: 192.168.1.10',
+ dns:'DNS LESSON:\nDNS translates domain names into IP addresses.\nExample: example.com',
+ ports:'PORTS LESSON:\nPorts identify communication endpoints.\nExample: HTTPS commonly uses port 443.',
+ missions:'Available missions:\n1. Learn what DNS means\n2. Identify an IP address\n3. Understand firewalls\n4. Recognize phishing\n5. Learn encryption',
+ status:'SYSTEM: ONLINE\nMODE: EDUCATIONAL\nREAL NETWORK ACCESS: DISABLED'
+ };
+ if(c==='clear'){output.textContent='';return}
+ printLine(commands[c]||'Command not found. Type help to see available commands.');
+}
+function answer(btn,correct){
+ const r=document.getElementById('networkResult');
+ r.textContent=correct?'✓ Correct! DNS translates domain names into IP addresses.':'Not quite. Try again!';
+ r.style.color=correct?'#00ff88':'#ff7777';
+}
+function checkPassword(){
+ const p=document.getElementById('pass').value;
+ let score=0;
+ if(p.length>=8)score++;
+ if(p.length>=14)score++;
+ if(/[A-Z]/.test(p)&&/[a-z]/.test(p))score++;
+ if(/[0-9]/.test(p))score++;
+ if(/[^A-Za-z0-9]/.test(p))score++;
+ const levels=['Very weak','Weak','Fair','Good','Strong','Very strong'];
+ document.getElementById('strength').textContent=p?levels[score]:'Waiting for input...';
+ document.getElementById('passbar').style.width=(score*20)+'%';
+ document.getElementById('passinfo').textContent=p?'This is a basic educational estimate, not a guarantee of security.':'A good password should be long and difficult to guess.';
+}
+const missions=[
+['Understand IP','What identifies a device on a network?','IP address'],
+['Learn DNS','What translates domain names into IP addresses?','DNS'],
+['Firewall','What filters network traffic?','Firewall'],
+['Phishing','What is phishing?','A deceptive attempt to obtain information'],
+['Encryption','What protects data by transforming it?','Encryption']
+];
+let done=JSON.parse(localStorage.getItem('hackerosDone')||'[]');
+function renderMissions(){
+ const grid=document.getElementById('missionGrid');grid.innerHTML='';
+ missions.forEach((m,i)=>{
+ const d=document.createElement('div');d.className='card';
+ d.innerHTML='<span class="tag">MISSION '+(i+1)+'</span><h3>'+m[0]+'</h3><p class="muted">'+m[1]+'</p><button>'+(done.includes(i)?'✓ Completed':'Complete mission')+'</button>';
+ d.querySelector('button').onclick=()=>{
+ if(done.includes(i))return;
+ const ans=prompt('Your answer:');
+ if(ans&&ans.trim().toLowerCase()===m[2].toLowerCase()){
+ done.push(i);localStorage.setItem('hackerosDone',JSON.stringify(done));renderMissions();
+ }else alert('Not quite. Review the lessons and try again!');
+ };
+ grid.appendChild(d);
+ });
+ document.getElementById('progress').style.width=(done.length/5*100)+'%';
+ document.getElementById('progressText').textContent=done.length+' / 5 missions completed';
+}
+renderMissions();
+
+const canvas=document.getElementById('matrix'),ctx=canvas.getContext('2d');
+let drops=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;drops=Array(Math.ceil(canvas.width/18)).fill(1)}
+window.addEventListener('resize',resize);resize();
+setInterval(()=>{
+ ctx.fillStyle='rgba(5,9,7,0.09)';ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.fillStyle='#00ff88';ctx.font='15px monospace';
+ drops.forEach((y,i)=>{
+ ctx.fillText(Math.random()>.5?'1':'0',i*18,y*18);
+ if(y*18>canvas.height&&Math.random()>.975)drops[i]=0;
+ drops[i]++;
+ });
+},60);
+</script>
+</body>
+</html>
